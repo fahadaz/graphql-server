@@ -7,8 +7,8 @@ const schema = require('./schema.js');
 const uuidv1 = require('uuid/v1');
 
 const callbackUrl = "http://localhost:8080/oauth/callback",
-    consumerKey = "3MVG9uudbyLbNPZPv_gGUI722KTYfOVuC30G6Shodkr9MxlihQpl.tRzb89J9_l6WhSrRsISad9MbOaz_WnZK",
-    consumerSecret = "6646899157235561401";
+    consumerKey = "xxxx",
+    consumerSecret = "xxxx";
 
 // setting up session
 app.use(

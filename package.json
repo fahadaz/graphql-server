@@ -9,11 +9,14 @@
   "author": "Fahad Azeem",
   "license": "MIT",
   "dependencies": {
+    "axios": "^0.16.2",
     "express": "^4.15.4",
     "express-graphql": "^0.6.7",
+    "express-session": "^1.15.5",
     "graphql": "^0.10.5",
     "n": "^2.1.8",
     "nodemon": "^1.11.0",
-    "salesforce-oauth2": "^0.1.8"
+    "salesforce-oauth2": "^0.1.8",
+    "uuid": "^3.1.0"
   }
 }

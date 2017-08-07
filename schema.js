@@ -1,3 +1,5 @@
+const axios = require('axios');
+
 const {
     GraphQLObjectType,
     GraphQLString,
@@ -7,21 +9,13 @@ const {
     GraphQLNonNull
 } = require('graphql');
 
-// Hardcoded Data
-const customers = [
-    {id:'1', name:'John Doe', email:'jdoe@gmail.com', age:35},
-    {id:'2', name:'Steve Smith', email:'ssmith@gmail.com', age:25},
-    {id:'3', name:'Sara Williams', email:'sara@gmail.com', age:32}
-    ];
-
 //Customer Type
 const CustomerType = new GraphQLObjectType({
     name:'Customer',
     fields:()=> ({
-        id: {type:GraphQLString},
-        name: {type:GraphQLString},
-        email: {type:GraphQLString},
-        age: {type:GraphQLInt}
+        Id: {type:GraphQLString},
+        Name: {type:GraphQLString},
+        Email: {type:GraphQLString}
     })
 });
 
@@ -31,20 +25,39 @@ const RootQuery = new GraphQLObjectType({
         customer:{
             type:CustomerType,
             args:{
-                id:{type:GraphQLString}
+                Id:{type:GraphQLString}
             },
-            resolve(parentValue, args){
-                for(let i=0;i<customers.length;i++){
-                    if(customers[i].id == args.id){
-                        return customers[i];
+            resolve(parentValue, args, session){
+                
+                let config = {
+                    headers: {'Authorization': 'Bearer '+ session.session.payload.access_token}
+                };
+
+                let url = session.session.payload.instance_url +'/services/data/v39.0/query/?q='+ encodeURIComponent("SELECT Id,Name, Email FROM Contact WHERE Id='"+args.Id+"'");
+                return axios.get(url, config)
+                .then(res => {
+                    console.log(res.data);
+                    if(res.data.totalSize == 1){
+                    return res.data.records[0];
                     }
-                }
+                    return null;
+                });
             }
         },
         customers:{
             type: new GraphQLList(CustomerType),
-            resolve(parentValue,args){
-                return customers;
+            resolve(parentValue,args, session){
+                console.log('----->>>------>>>-----');
+                let config = {
+                    headers: {'Authorization': 'Bearer '+ session.session.payload.access_token}
+                };
+
+                let url = session.session.payload.instance_url +'/services/data/v39.0/query/?q='+ encodeURIComponent('SELECT Id,Name, Email FROM Contact LIMIT 100');
+                return axios.get(url, config)
+                .then(res => {
+                    console.log(res.data.records);
+                    return res.data.records;
+                });
             }
         }
     }

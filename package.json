@@ -4,7 +4,8 @@
   "description": "simple graphql server",
   "main": "server.js",
   "scripts": {
-    "dev:server": "nodemon server.js"
+    "dev:server": "nodemon server.js",
+    "start":"node server.js"
   },
   "author": "Fahad Azeem",
   "license": "MIT",

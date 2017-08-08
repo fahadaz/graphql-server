@@ -79,7 +79,7 @@ app.use('/graphql', expressGraphQL((request) => ({
                 graphiql: true
 })));
 
-const ip = process.env.IP ? process.env.IP : "localhost";
+const ip = process.env.IP ? process.env.IP : "0:0:0:0";
 const port = process.env.PORT ? process.env.PORT : 8080;
 
 app.listen(port, ip, () => {

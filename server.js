@@ -6,9 +6,9 @@ const oauth2 = require('salesforce-oauth2');
 const schema = require('./schema.js');
 const uuidv1 = require('uuid/v1');
 
-const callbackUrl = "http://localhost:8080/oauth/callback",
-    consumerKey = "xxxx",
-    consumerSecret = "xxxx";
+const callbackUrl = process.env.CallbackUrl,
+    consumerKey = process.env.ConsumerKey,
+    consumerSecret = process.env.ConsumerSecret;
 
 // setting up session
 app.use(
